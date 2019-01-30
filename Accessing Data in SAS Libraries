@@ -1,0 +1,20 @@
+# create a data file 'abc' in the library
+data abc;
+     set sashelp.cars;
+     where Origin = 'Europe';
+run;
+
+proc print data = abc; 
+run;
+
+    
+# create a library named 'libsas' under the directory of folder 'datafiles' with file content extracted from 'sashelp.Cars'
+libname libsas '/folders/myfolders/datafiles';
+
+data libsas.Cars;
+     set sashelp.Cars;
+     where DriveTrain = 'All' && Origin = 'Asia';
+run;
+
+proc print data=libsas.cars;
+run;
