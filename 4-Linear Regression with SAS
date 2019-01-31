@@ -1,0 +1,31 @@
+proc import out=work.data
+  datafile = '/folders/myfolders/datafiles/Cars/regression_auto.csv'
+  dbms = csv replace; getnames = yes; datarow =2;
+run;
+
+proc means data = data;
+  var mpg weight1 price foreign;
+run;
+
+proc univariate data = data;
+  var mpg;
+run;
+
+proc corr data = data;
+  var mpg weight1 price foreign;
+run;
+
+proc sgplot data = data;
+  scatter x=weight1 y=mpg;   
+run;
+
+/* here use "sgplot...scatter..x=..y=..", 
+   but also can use 'gplot...plot..|variable for x|*|variable for y|" if other editions available */
+
+proc reg data = data;
+  model mpg = weight1;
+run;
+
+proc reg data = data;
+  model mpg = weight1 price foreign;
+run;
