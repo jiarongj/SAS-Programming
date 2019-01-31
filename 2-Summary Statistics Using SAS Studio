@@ -1,0 +1,13 @@
+
+ods noproctitle;
+ods graphics / imagemap=on;
+
+proc means data=SASHELP.CARS chartype mean std min max n vardef=df;    #create summary staticstics frame
+	var Weight;
+run;
+
+proc univariate data=SASHELP.CARS vardef=df noprint;
+	var Weight;
+	histogram Weight / normal(noprint) kernel;   # create histogram figure with kernel distribution
+	inset mean std min max n / position=nw;
+run;
