@@ -1,0 +1,29 @@
+# Summarize the data
+title1 'List Data for SASHELP.CARS';
+
+proc sort data=SASHELP.CARS out=WORK.SORTTEMP;
+	by Type;
+run;
+
+proc print data=WORK.SORTTEMP label;
+	var Invoice Weight Origin;
+	by Type;
+run;
+
+proc delete data=work.SORTTEMP;
+run;
+
+title1;
+
+
+# create the HBar chart
+/*--HBar Plot--*/
+
+title 'Average weight by type';
+proc sgplot data=sashelp.cars ;
+  hbar type / response=weight  stat=mean;
+  yaxis display=(nolabel) grid;
+  xaxis display=(nolabel);
+  run;
+
+
