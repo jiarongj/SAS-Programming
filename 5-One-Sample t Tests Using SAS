@@ -1,0 +1,14 @@
+ods noproctitle;
+ods graphics / imagemap=on;
+
+/* Test for normality */
+proc univariate data=SASHELP.CARS normal mu0=300;
+	ods select TestsForNormality;
+	var Horsepower;
+run;
+
+/* t test */
+proc ttest data=SASHELP.CARS sides=2 h0=300 plots(only showh0)=(summaryPlot 
+		qqplot);
+	var Horsepower;
+run;
