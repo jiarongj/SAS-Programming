@@ -1,0 +1,20 @@
+ods graphics / reset width=6in height=4in imagemap;
+
+proc sort data=SASHELP.STOCKS out=_SeriesPlotTaskData;
+	by Date;
+run;
+
+# Series plot for stock trend
+proc sgplot data=_SeriesPlotTaskData;
+	title height=14pt "Stock close by date";
+	series x=Date y=Close / group=Stock;
+	xaxis grid display=(nolabel);
+	yaxis grid;
+run;
+
+ods graphics / reset;
+title;
+
+proc datasets library=WORK noprint;
+	delete _SeriesPlotTaskData;
+	run;
